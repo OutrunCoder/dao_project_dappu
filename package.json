@@ -18,6 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:contracts": "npx hardhat test",
+    "test:dao-contract": "npx hardhat test ./test/DAO.js",
     "eject": "react-scripts eject",
     "start:hardhat-node": "npx hardhat node"
   },

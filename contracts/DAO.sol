@@ -21,5 +21,6 @@ contract DAO {
       quorum = args._quorum;
     }
 
-
+    // DAO treasury
+    receive() external payable {}
 }

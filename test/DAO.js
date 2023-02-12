@@ -1,11 +1,11 @@
 const { ethers } = require('hardhat');
 const { expect } = require('chai');
 
-// const tokensToWei = (n) => {
-//   return ethers.utils.parseUnits(n.toString(), 'ether');
-// }
+const tokensToWei = (n) => {
+  return ethers.utils.parseUnits(n.toString(), 'ether');
+}
 
-// const etherToWei = tokensToWei;
+const etherToWei = tokensToWei;
 
 describe('DAO', () => {
   const tokenContractName = 'Dapp University';
@@ -16,14 +16,16 @@ describe('DAO', () => {
   let tokenContract;
   let daoContract;
   //
-  // let accounts: Array<any>;
-  // let deployer: any;
-  // let user1: any;
+  let accounts;
+  let deployer;
+  let funder;
   //
-  // let deployerAddress: string;
-  // let user1Address: string;
+  let deployerAddress;
+  let funderAddress;
   let tknContractAddress;
-  // let daoContractAddress;
+  let daoContractAddress;
+  //
+  const initialFunding = etherToWei(100);
   
   beforeEach(async() => {
     // Load contracts
@@ -39,17 +41,20 @@ describe('DAO', () => {
       _tokenContractAddress: tknContractAddress,
       _quorum: quromThreshold
     });
-    // daoContractAddress = daoContract.address;
+    daoContractAddress = daoContract.address;
 
-    // // Collect Accounts
-    // accounts = await ethers.getSigners();
-    // // ACTORS
-    // [
-    //   deployer,
-    //   user1
-    // ] = accounts;
-    // deployerAddress = deployer.address;
-    // user1Address = user1.address;
+    // Collect Accounts
+    accounts = await ethers.getSigners();
+    // ACTORS
+    [
+      deployer,
+      funder
+    ] = accounts;
+    deployerAddress = deployer.address;
+    funderAddress = funder.address;
+
+    // FUND THE DAO !
+    await funder.sendTransaction({ to: daoContractAddress, value: initialFunding});
   });
 
   describe('Deployment', () => {
@@ -63,6 +68,10 @@ describe('DAO', () => {
 
     it('returns quorum', async() => {
       expect(await daoContract.quorum()).to.equal(quromThreshold);
+    });
+
+    it('sends ether to the DAO treasury', async() => {
+      expect(await ethers.provider.getBalance(daoContractAddress)).to.equal(initialFunding);
     });
   });
 
