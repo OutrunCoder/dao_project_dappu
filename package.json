@@ -17,6 +17,7 @@
     "start:ui-dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:contracts": "npx hardhat test",
     "eject": "react-scripts eject",
     "start:hardhat-node": "npx hardhat node"
   },
