@@ -6,7 +6,7 @@ import "./Token.sol";
 
 struct DAODeploymentArgs {
   Token _tokenContractAddress;
-  uint256 quorum;
+  uint256 _quorum;
 }
 
 contract DAO {
