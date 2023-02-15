@@ -85,21 +85,39 @@ describe('DAO', () => {
   });
 
   describe('Proposal Creation', () => {
-    let proposalTrx, propResult;
-
+    let proposalTrx; //, propResult;
+    const propName = 'Proposal_test_1';
+    const propDistribution = etherToWei(100);
+    let propRecipient;
+    
+    
     describe('Success', () => {
-      beforeEach(async() => {
-        proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_1', etherToWei(100), recipient_1Address);
-        propResult = await proposalTrx.wait();
+      beforeEach(async () => {
+        propRecipient = recipient_1Address;
+
+        // Create first proposal
+        proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistribution, propRecipient);
+        // propResult =
+        await proposalTrx.wait();
       });
 
       it('updates proposal count', async () => {
         expect(await daoContract.proposalCount()).to.equal(1);
       });
 
-      it('', async () => {});
+      it('updates proposal mapping', async () => {
+        // const proposal = await daoContract.proposals(1);
+        // console.log('>> PROP_1:', proposal);
+        const { id, amount, recipient } = await daoContract.proposals(1);
+
+        expect(id).to.equal(1);
+        expect(amount).to.equal(propDistribution);
+        expect(recipient).to.equal(propRecipient);
+      });
+
+      // it('', async () => {});
     });
 
-    describe('Failure', () => {});
+    // describe('Failure', () => {});
   });
 })
