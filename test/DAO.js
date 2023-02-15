@@ -19,9 +19,11 @@ describe('DAO', () => {
   let accounts;
   let deployer;
   let funder;
+  let investor_1;
   //
   let deployerAddress;
   let funderAddress;
+  let investor_1Address;
   let tknContractAddress;
   let daoContractAddress;
   //
@@ -48,10 +50,12 @@ describe('DAO', () => {
     // ACTORS
     [
       deployer,
-      funder
+      funder,
+      investor_1
     ] = accounts;
     deployerAddress = deployer.address;
     funderAddress = funder.address;
+    investor_1Address = investor_1.address;
 
     // FUND THE DAO !
     await funder.sendTransaction({ to: daoContractAddress, value: initialFunding});
@@ -75,4 +79,15 @@ describe('DAO', () => {
     });
   });
 
+  describe('Proposal Creation', () => {
+    describe('Success', () => {
+      beforeEach(async() => {
+
+      });
+
+      it('', async () => {});
+    });
+
+    describe('Failure', () => {});
+  });
 })
