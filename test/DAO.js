@@ -93,6 +93,10 @@ describe('DAO', () => {
         propResult = await proposalTrx.wait();
       });
 
+      it('updates proposal count', async () => {
+        expect(await daoContract.proposalCount()).to.equal(1);
+      });
+
       it('', async () => {});
     });
 
