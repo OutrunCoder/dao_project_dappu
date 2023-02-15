@@ -17,6 +17,7 @@ contract DAO {
 
     //
     uint256 public proposalCount;
+    mapping(uint256 => Proposal) public proposals;
 
     constructor(DAODeploymentArgs memory args) {
       owner = msg.sender;
@@ -43,8 +44,8 @@ contract DAO {
     ) external {
       proposalCount++;
 
-      // Create proposal model
-      Proposal(
+      // Create proposal & add to the list of curated proposals
+      proposals[proposalCount] = Proposal(
         proposalCount, // id
         _name,
         _amount,
