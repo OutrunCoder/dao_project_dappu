@@ -23,4 +23,29 @@ contract DAO {
 
     // DAO treasury
     receive() external payable {}
+
+    struct Proposal {
+      uint256 id;
+      string name;
+      uint256 amount;
+      address payable recipient;
+      uint256 votes;
+      bool finalized;
+    }
+
+    function createProposal(
+      string memory _name,
+      uint256 _amount,
+      address payable _recipient
+    ) external {
+      // Create proposal model
+      Proposal(
+        1, // id
+        _name,
+        _amount,
+        _recipient,
+        0, // votes
+        false // finalized
+      );  
+    }
 }
