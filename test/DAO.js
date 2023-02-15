@@ -19,11 +19,14 @@ describe('DAO', () => {
   let accounts;
   let deployer;
   let funder;
+  //
   let investor_1;
+  let recipient_1;
   //
   let deployerAddress;
   let funderAddress;
   let investor_1Address;
+  let recipient_1Address;
   let tknContractAddress;
   let daoContractAddress;
   //
@@ -51,11 +54,13 @@ describe('DAO', () => {
     [
       deployer,
       funder,
-      investor_1
+      investor_1,
+      recipient_1
     ] = accounts;
     deployerAddress = deployer.address;
     funderAddress = funder.address;
     investor_1Address = investor_1.address;
+    recipient_1Address = recipient_1.address;
 
     // FUND THE DAO !
     await funder.sendTransaction({ to: daoContractAddress, value: initialFunding});
@@ -80,9 +85,12 @@ describe('DAO', () => {
   });
 
   describe('Proposal Creation', () => {
+    let proposalTrx, propResult;
+
     describe('Success', () => {
       beforeEach(async() => {
-
+        proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_1', etherToWei(100), recipient_1Address);
+        propResult = await proposalTrx.wait();
       });
 
       it('', async () => {});
