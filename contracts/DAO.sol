@@ -15,6 +15,9 @@ contract DAO {
     Token public tokenContract;
     uint256 public quorum;
 
+    //
+    uint256 public proposalCount;
+
     constructor(DAODeploymentArgs memory args) {
       owner = msg.sender;
       tokenContract = args._tokenContractAddress;
@@ -38,9 +41,11 @@ contract DAO {
       uint256 _amount,
       address payable _recipient
     ) external {
+      proposalCount++;
+
       // Create proposal model
       Proposal(
-        1, // id
+        proposalCount, // id
         _name,
         _amount,
         _recipient,
