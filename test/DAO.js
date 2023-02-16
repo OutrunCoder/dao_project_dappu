@@ -212,6 +212,11 @@ describe('DAO', () => {
       });
     });
 
-    // describe('Failure', () => {});
+    describe('Failure', () => {
+      it('voting rejects non investor', async () => {
+        const invalidUserVoting = daoContract.connect(randomUser).vote(1);
+        await expect(invalidUserVoting).to.be.reverted;
+      });
+    });
   });
 })
