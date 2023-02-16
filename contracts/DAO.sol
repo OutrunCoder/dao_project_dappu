@@ -78,4 +78,17 @@ contract DAO {
         msg.sender // creator
       );
     }
+
+    function vote(uint256 _id) external onlyInvestor {
+      // NOTE - how to read and modify in solidity 
+      // Fetch proposal from mapping by id
+      Proposal storage proposal = proposals[_id];
+      // update votes - implemented token weighted voting
+      proposal.votes += tokenContract.balanceOf(msg.sender);
+
+
+      // Track that user has voted
+
+      // Emit an event
+    }
 }

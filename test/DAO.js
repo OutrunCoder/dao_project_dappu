@@ -183,4 +183,35 @@ describe('DAO', () => {
       // it('', async () => {});
     });
   });
+
+  describe('Voting', () => {
+    let proposalTrx, votingTrx; //, propResult;
+    const propName = 'Proposal_test_voting';
+    let propRecipient;
+
+    beforeEach(async () => {
+      propRecipient = recipient_1Address;
+
+      // Create first proposal
+      proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistributionAmount, propRecipient);
+      // propResult =
+      await proposalTrx.wait();
+    });
+
+    describe('Success', () => {
+      beforeEach(async () => {
+        // ! VOTE HERE >>>
+        votingTrx = await daoContract.connect(investor_1).vote(1);
+        // propResult =
+        await votingTrx.wait();
+      });
+
+      it('updates the vote count', async () => {
+        const proposal = await daoContract.proposals(1);
+        expect(proposal.votes).to.equal(tokensToWei(200000));
+      });
+    });
+
+    // describe('Failure', () => {});
+  });
 })
