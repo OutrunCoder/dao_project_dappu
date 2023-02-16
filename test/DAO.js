@@ -21,7 +21,7 @@ describe('DAO', () => {
   let accounts;
   let deployer;
   let funder;
-  // - INVESTORS
+  // - ACTORS
   let investor_1;
   let investor_2;
   let investor_3;
@@ -88,6 +88,23 @@ describe('DAO', () => {
       _quorum: quromThreshold // = over 50%
     });
     daoContractAddress = daoContract.address;
+
+    // TODO - BRING IN ASYNC AWAIT LIB SERIES MANAGEMENT
+    // DIST DAO TOKENS TO INVESTORS
+    // [].forEach((investor) => {});
+    // REFACTOR into async series >>>
+    const distDAO_tokenAmount = tokensToWei(200000); // = 20%
+    distTrx = await tokenContract.connect(deployer).transfer(investor_1Address, distDAO_tokenAmount);
+    await distTrx.wait();
+    distTrx = await tokenContract.connect(deployer).transfer(investor_2Address, distDAO_tokenAmount);
+    await distTrx.wait();
+    distTrx = await tokenContract.connect(deployer).transfer(investor_3Address, distDAO_tokenAmount);
+    await distTrx.wait();
+    distTrx = await tokenContract.connect(deployer).transfer(investor_4Address, distDAO_tokenAmount);
+    await distTrx.wait();
+    distTrx = await tokenContract.connect(deployer).transfer(investor_5Address, distDAO_tokenAmount);
+    await distTrx.wait();
+    // REFACTOR <<<
 
 
     // FUND THE DAO !
