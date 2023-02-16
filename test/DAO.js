@@ -173,6 +173,11 @@ describe('DAO', () => {
         await expect(underFundedProposal).to.be.reverted;
       });
 
+      it('createProposal rejects non investor', async () => {
+        const invalidUserProposal = daoContract.connect(randomUser).createProposal(propName, propDistributionAmount, propRecipient);
+        await expect(invalidUserProposal).to.be.reverted;
+      });
+
       // it('', async () => {});
     });
   });

@@ -49,6 +49,8 @@ contract DAO {
       uint256 _amount,
       address payable _recipient
     ) external {
+      // SENDER MUST BE A HOLDER OF DAO TOKEN
+      require(Token(tokenContract).balanceOf(msg.sender) > 0 , "Sender must be a token holder");
       // DAO HAS FUNDS TO COMMIT TO A PROPOSAL
       require(address(this).balance >= _amount, "Proposal is underfunded. Cannot be paid for");
 
