@@ -81,6 +81,11 @@ contract DAO {
 
     mapping(address => mapping(uint256 => bool)) votes;
 
+    event Vote(
+      uint256 id,
+      address investor
+    );
+
     function vote(uint256 _id) external onlyInvestor {
       // Verify if investor has previously voted
       bool previouslyVoted = votes[msg.sender][_id];
@@ -99,5 +104,6 @@ contract DAO {
       votes[msg.sender][_id] = true;
 
       // Emit an event
+      emit Vote(_id, msg.sender);
     }
 }

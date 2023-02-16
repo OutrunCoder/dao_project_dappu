@@ -210,10 +210,15 @@ describe('DAO', () => {
         const proposal = await daoContract.proposals(1);
         expect(proposal.votes).to.equal(tokensToWei(200000));
       });
+
+      it('emits vote event', async () => {
+        await expect(votingTrx).of.emit(daoContract, "Vote")
+          .withArgs(1, investor_1Address);
+      });
     });
 
     describe('Failure', () => {
-      it('voting rejects non investor', async () => {
+      it('rejects non investor', async () => {
         const invalidUserVoting = daoContract.connect(randomUser).vote(1);
         await expect(invalidUserVoting).to.be.reverted;
       });
