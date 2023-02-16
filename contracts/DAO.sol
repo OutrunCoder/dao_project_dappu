@@ -79,15 +79,24 @@ contract DAO {
       );
     }
 
+    mapping(address => mapping(uint256 => bool)) votes;
+
     function vote(uint256 _id) external onlyInvestor {
+      // Verify if investor has previously voted
+      bool previouslyVoted = votes[msg.sender][_id];
+      require(!previouslyVoted, 'Investor has previously voted on this proposal.');
+      
       // NOTE - how to read and modify in solidity 
       // Fetch proposal from mapping by id
       Proposal storage proposal = proposals[_id];
       // update votes - implemented token weighted voting
       proposal.votes += tokenContract.balanceOf(msg.sender);
 
-
       // Track that user has voted
+      // ! should keep track on the proposal itself but...
+      // Course wants to use nested mapping to cross-ref voter to proposal
+      // makes sense for maintaining anonimity though
+      votes[msg.sender][_id] = true;
 
       // Emit an event
     }

@@ -217,6 +217,15 @@ describe('DAO', () => {
         const invalidUserVoting = daoContract.connect(randomUser).vote(1);
         await expect(invalidUserVoting).to.be.reverted;
       });
+
+      it('rejects duplicate voting', async () => {
+        // const markVoting =
+        await daoContract.connect(investor_1).vote(1);
+        // const duplicateVote = await daoContract.connect(investor_1).vote(1);
+        const duplicateVote = daoContract.connect(investor_1).vote(1);
+
+        await expect(duplicateVote).to.be.rejected;
+      });
     });
   });
 })
