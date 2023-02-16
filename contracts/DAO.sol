@@ -46,7 +46,7 @@ contract DAO {
 
     modifier onlyInvestor() {
       // SENDER MUST BE A HOLDER OF DAO TOKEN
-      require(Token(tokenContract).balanceOf(msg.sender) > 0 , "Sender must be a token holder");
+      require(tokenContract.balanceOf(msg.sender) > 0 , "Sender must be a token holder");
       _;
     }
 
