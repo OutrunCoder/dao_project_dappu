@@ -87,7 +87,8 @@ describe('DAO', () => {
   describe('Proposal Creation', () => {
     let proposalTrx; //, propResult;
     const propName = 'Proposal_test_1';
-    const propDistributionAmount = etherToWei(100);
+    const propDistributionAmount = etherToWei(80);
+    const overPricedPropDistributionAmount = etherToWei(1000);
     let propRecipient;
     
     
@@ -119,10 +120,15 @@ describe('DAO', () => {
         await expect(proposalTrx).to.emit(daoContract, 'Propose')
           .withArgs(1, propDistributionAmount, propRecipient, investor_1Address)
       });
+    });
+    
+    describe('Failure', () => {
+      it('rejects underfunded proposal', async () => {
+        const underFundedProposal = daoContract.connect(investor_1).createProposal(propName, overPricedPropDistributionAmount, propRecipient);
+        await expect(underFundedProposal).to.be.reverted;
+      });
 
       // it('', async () => {});
     });
-
-    // describe('Failure', () => {});
   });
 })

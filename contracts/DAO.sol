@@ -49,6 +49,10 @@ contract DAO {
       uint256 _amount,
       address payable _recipient
     ) external {
+      // DAO HAS FUNDS TO COMMIT TO A PROPOSAL
+      require(address(this).balance >= _amount, "Proposal is underfunded. Cannot be paid for");
+
+      // CONTINUE
       proposalCount++;
 
       // Create proposal & add to the list of curated proposals
