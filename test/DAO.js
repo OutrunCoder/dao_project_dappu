@@ -13,7 +13,9 @@ describe('DAO', () => {
   let tokenTotalSupply = '1000000';
   // let tokenTotalSupplyInWei = tokensToWei(tokenTotalSupply);
   const quromThreshold = '500000000000000000000001'; // = over 50%
+  // - AMOUNTS
   const initialFunding = etherToWei(100);
+  const propDistributionAmount = etherToWei(80);
   // - CONTRACTS
   let tokenContract;
   let daoContract;
@@ -131,8 +133,8 @@ describe('DAO', () => {
 
   describe('Proposal Creation', () => {
     let proposalTrx; //, propResult;
-    const propName = 'Proposal_test_1';
-    const propDistributionAmount = etherToWei(80);
+    const propName = 'Proposal_test_creation';
+    
     const overPricedPropDistributionAmount = etherToWei(1000);
     let propRecipient;
     
