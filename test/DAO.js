@@ -87,7 +87,7 @@ describe('DAO', () => {
   describe('Proposal Creation', () => {
     let proposalTrx; //, propResult;
     const propName = 'Proposal_test_1';
-    const propDistribution = etherToWei(100);
+    const propDistributionAmount = etherToWei(100);
     let propRecipient;
     
     
@@ -96,7 +96,7 @@ describe('DAO', () => {
         propRecipient = recipient_1Address;
 
         // Create first proposal
-        proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistribution, propRecipient);
+        proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistributionAmount, propRecipient);
         // propResult =
         await proposalTrx.wait();
       });
@@ -111,8 +111,13 @@ describe('DAO', () => {
         const { id, amount, recipient } = await daoContract.proposals(1);
 
         expect(id).to.equal(1);
-        expect(amount).to.equal(propDistribution);
+        expect(amount).to.equal(propDistributionAmount);
         expect(recipient).to.equal(propRecipient);
+      });
+
+      it('emits a propose event', async () => {
+        await expect(proposalTrx).to.emit(daoContract, 'Propose')
+          .withArgs(1, propDistributionAmount, propRecipient, investor_1Address)
       });
 
       // it('', async () => {});

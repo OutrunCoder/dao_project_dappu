@@ -37,6 +37,13 @@ contract DAO {
       bool finalized;
     }
 
+    event Propose(
+      uint256 id,
+      uint256 amount,
+      address recipient,
+      address creator
+    );
+
     function createProposal(
       string memory _name,
       uint256 _amount,
@@ -52,6 +59,13 @@ contract DAO {
         _recipient,
         0, // votes
         false // finalized
-      );  
+      );
+
+      emit Propose(
+        proposalCount, // id
+        _amount,
+        _recipient,
+        msg.sender // creator
+      );
     }
 }
