@@ -8,31 +8,72 @@ const tokensToWei = (n) => {
 const etherToWei = tokensToWei;
 
 describe('DAO', () => {
+  // - CONFIG
   const tokenContractName = 'Dapp University';
   let tokenTotalSupply = '1000000';
   // let tokenTotalSupplyInWei = tokensToWei(tokenTotalSupply);
-  const quromThreshold = '500000000000000000000001';
-  //
+  const quromThreshold = '500000000000000000000001'; // = over 50%
+  const initialFunding = etherToWei(100);
+  // - CONTRACTS
   let tokenContract;
   let daoContract;
-  //
+  // - ACCOUNTS
   let accounts;
   let deployer;
   let funder;
-  //
+  // - INVESTORS
   let investor_1;
+  let investor_2;
+  let investor_3;
+  let investor_4;
+  let investor_5;
   let recipient_1;
-  //
-  let deployerAddress;
-  let funderAddress;
+  let randomUser;
+  // - ADDRESSES
+  // let deployerAddress;
+  // let funderAddress;
   let investor_1Address;
+  let investor_2Address;
+  let investor_3Address;
+  let investor_4Address;
+  let investor_5Address;
   let recipient_1Address;
+  // let randomUserAddress;
+  // - CONTRACT ADDRESSES
   let tknContractAddress;
   let daoContractAddress;
   //
-  const initialFunding = etherToWei(100);
   
   beforeEach(async() => {
+    let distTrx;
+    // Collect Accounts
+    accounts = await ethers.getSigners();
+    // ACTORS
+    [
+      deployer,
+      funder,
+      //
+      investor_1,
+      investor_2,
+      investor_3,
+      investor_4,
+      investor_5,
+      //
+      recipient_1,
+      randomUser
+    ] = accounts;
+    // deployerAddress = deployer.address;
+    // funderAddress = funder.address;
+    //
+    investor_1Address = investor_1.address;
+    investor_2Address = investor_2.address;
+    investor_3Address = investor_3.address;
+    investor_4Address = investor_4.address;
+    investor_5Address = investor_5.address;
+    //
+    recipient_1Address = recipient_1.address;
+    // randomUserAddress = randomUser.address; // non DAO member;
+
     // Load contracts
     const tknContractFactory = await ethers.getContractFactory('Token');
     const daoContractFactory = await ethers.getContractFactory('DAO');
@@ -44,23 +85,10 @@ describe('DAO', () => {
     // DEPLOY DAO !
     daoContract = await daoContractFactory.deploy({
       _tokenContractAddress: tknContractAddress,
-      _quorum: quromThreshold
+      _quorum: quromThreshold // = over 50%
     });
     daoContractAddress = daoContract.address;
 
-    // Collect Accounts
-    accounts = await ethers.getSigners();
-    // ACTORS
-    [
-      deployer,
-      funder,
-      investor_1,
-      recipient_1
-    ] = accounts;
-    deployerAddress = deployer.address;
-    funderAddress = funder.address;
-    investor_1Address = investor_1.address;
-    recipient_1Address = recipient_1.address;
 
     // FUND THE DAO !
     await funder.sendTransaction({ to: daoContractAddress, value: initialFunding});
