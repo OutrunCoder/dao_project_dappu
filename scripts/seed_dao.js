@@ -1,5 +1,7 @@
 
 const hre = require("hardhat");
+const config = require('../src/config.json');
+const network = config['31337'];
 
 const tokensToWei = (n) => {
   return hre.ethers.utils.parseUnits(n.toString(), 'ether');
@@ -27,7 +29,7 @@ async function main() {
   ] = accounts;
 
   console.log('>> Fetch Token contract... \n');
-  const tokenContract = await hre.ethers.getContractAt('Token', '0x5FbDB2315678afecb367f032d93F642f64180aa3');
+  const tokenContract = await hre.ethers.getContractAt('Token', network.token.address);
   console.log(`Token fetched: ${tokenContract.address}\n`);
 
   console.log('>> Distribute to investors... \n');
@@ -50,7 +52,7 @@ async function main() {
   // REFACTOR <<<
 
   console.log('>> Fetch DAO contract... \n');
-  const daoContract = await hre.ethers.getContractAt('DAO', '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512');
+  const daoContract = await hre.ethers.getContractAt('DAO', network.DAO.address);
   console.log(`DAO fetched: ${daoContract.address}\n`);
 
   console.log('>> Fund the DAO... \n');
