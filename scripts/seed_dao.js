@@ -48,6 +48,14 @@ async function main() {
   // distTrx = await tokenContract.transfer(investor_5.address, distDAO_tokenAmount);
   // await distTrx.wait();
   // REFACTOR <<<
+
+  console.log('>> Fetch DAO contract... \n');
+  const daoContract = await hre.ethers.getContractAt('DAO', '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512');
+  console.log(`DAO fetched: ${daoContract.address}\n`);
+
+  // console.log('>> Fund the DAO... \n');
+  // let fundTrx;
+  // fundTrx = await funder.sendTransaction({ to: dao});
 }
 
 main().catch((error) => {
