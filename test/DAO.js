@@ -267,6 +267,10 @@ describe('DAO', () => {
         expect(proposal.finalized).to.equal(true);
       });
 
+      it('emits finalize event', async() => {
+        await expect(finTrx).of.emit(daoContract, "Finalize")
+          .withArgs(1);
+      });
       // it('', async() => {});
     });
     

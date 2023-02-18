@@ -107,6 +107,8 @@ contract DAO {
       emit Vote(_id, msg.sender);
     }
 
+    event Finalize(uint256 id);
+
     function finalizeProposal(uint256 _id) external onlyInvestor  {
       // collect the proposal
       Proposal storage proposal = proposals[_id];
@@ -120,14 +122,18 @@ contract DAO {
       // check for votes passsing
       require(proposal.votes >= quorum, "Must reach quorum to finalize proposal");
 
+      // Check that the contract has enough to payout
+      require(address(this).balance >= proposal.amount);
+
       // invoke Transfer if passed
       // A. - Insecure
       // proposal.recipient.transfer(proposal.amount);
 
-      // B. - 
+      // B. - better and more secure
       (bool valueWasSent, ) = proposal.recipient.call{value: proposal.amount}("");
       require(valueWasSent, "Proposal amount value was never sent.");
 
       // Emit event
+      emit Finalize(_id);
     }
 }
