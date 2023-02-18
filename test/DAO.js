@@ -132,9 +132,7 @@ describe('DAO', () => {
   });
 
   describe('Proposal Creation', () => {
-    let proposalTrx; //, propResult;
-    const propName = 'Proposal_test_creation';
-    
+    let proposalTrx; //, propResult;    
     const overPricedPropDistributionAmount = etherToWei(1000);
     let propRecipient;
     
@@ -144,7 +142,7 @@ describe('DAO', () => {
         propRecipient = recipient_1Address;
 
         // Create first proposal
-        proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistributionAmount, propRecipient);
+        proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_creation', propDistributionAmount, propRecipient);
         // propResult =
         await proposalTrx.wait();
       });
@@ -171,12 +169,12 @@ describe('DAO', () => {
     
     describe('Failure', () => {
       it('rejects underfunded proposal', async () => {
-        const underFundedProposal = daoContract.connect(investor_1).createProposal(propName, overPricedPropDistributionAmount, propRecipient);
+        const underFundedProposal = daoContract.connect(investor_1).createProposal('Proposal_test_creation_underfunded', overPricedPropDistributionAmount, propRecipient);
         await expect(underFundedProposal).to.be.reverted;
       });
 
       it('createProposal rejects non investor', async () => {
-        const invalidUserProposal = daoContract.connect(randomUser).createProposal(propName, propDistributionAmount, propRecipient);
+        const invalidUserProposal = daoContract.connect(randomUser).createProposal('Proposal_test_creation_non_investor', propDistributionAmount, propRecipient);
         await expect(invalidUserProposal).to.be.reverted;
       });
 
@@ -186,14 +184,13 @@ describe('DAO', () => {
 
   describe('Voting', () => {
     let proposalTrx, votingTrx; //, propResult;
-    const propName = 'Proposal_test_voting';
     let propRecipient;
 
     beforeEach(async () => {
       propRecipient = recipient_1Address;
 
       // Create first proposal
-      proposalTrx = await daoContract.connect(investor_1).createProposal(propName, propDistributionAmount, propRecipient);
+      proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_voting', propDistributionAmount, propRecipient);
       // propResult =
       await proposalTrx.wait();
     });
