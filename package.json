@@ -21,7 +21,8 @@
     "test:dao-contract": "npx hardhat test ./test/DAO.js",
     "eject": "react-scripts eject",
     "start:hardhat-node": "npx hardhat node",
-    "deploy:local-contract-series": "npx hardhat run scripts/deploy_contracts.js --network localhost"
+    "deploy:local-contract-series": "npx hardhat run scripts/deploy_contracts.js --network localhost",
+    "process:dao-prep": "npx hardhat run scripts/seed_dao.js --network localhost"
   },
   "author": "gregory@dappuniversity.com",
   "license": "ISC",
