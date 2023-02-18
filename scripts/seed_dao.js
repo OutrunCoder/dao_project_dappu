@@ -2,7 +2,7 @@
 const hre = require("hardhat");
 
 const tokensToWei = (n) => {
-  return ethers.utils.parseUnits(n.toString(), 'ether');
+  return hre.ethers.utils.parseUnits(n.toString(), 'ether');
 }
 
 const etherToWei = tokensToWei;
@@ -13,17 +13,17 @@ async function main() {
   const accounts = await hre.ethers.getSigners();
   // ACTORS
   const [
-    deployer,
+    // deployer,
     funder,
     //
     investor_1,
     investor_2,
     investor_3,
-    investor_4,
-    investor_5,
+    // investor_4,
+    // investor_5,
     //
-    recipient_1,
-    randomUser
+    // recipient_1,
+    // randomUser
   ] = accounts;
 
   console.log('>> Fetch Token contract... \n');
@@ -55,7 +55,7 @@ async function main() {
 
   console.log('>> Fund the DAO... \n');
   let fundTrx;
-  fundTrx = await funder.sendTransaction({ to: daoContract.address, value: tokensToWei(1000)});
+  fundTrx = await funder.sendTransaction({ to: daoContract.address, value: etherToWei(1000)});
   await fundTrx.wait();
 }
 
