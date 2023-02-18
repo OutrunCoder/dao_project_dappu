@@ -240,6 +240,8 @@ describe('DAO', () => {
         propRecipient = recipient_1Address;
 
         // create proposal
+        // console.log('>> recip_1 beginning bal:', await ethers.provider.getBalance(recipient_1Address));
+        // console.log('>> prop_dist_ammoutn:', propDistributionAmount);
         proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_finalization', propDistributionAmount, propRecipient);
         await proposalTrx.wait();
 
@@ -256,10 +258,15 @@ describe('DAO', () => {
         await finTrx.wait();
       });
 
+      it('transfers funds to recipient', async() => {
+        expect(await ethers.provider.getBalance(recipient_1Address)).to.equal(tokensToWei(10080));
+      });
+
       it('updates the proposal to finalized', async() => {
         const proposal = await daoContract.proposals(1);
         expect(proposal.finalized).to.equal(true);
       });
+
       // it('', async() => {});
     });
     

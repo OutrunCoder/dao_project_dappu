@@ -121,6 +121,8 @@ contract DAO {
       require(proposal.votes >= quorum, "Must reach quorum to finalize proposal");
 
       // invoke Transfer if passed
+      // A. - Insecure
+      // proposal.recipient.transfer(proposal.amount);
 
       // Emit event
     }
