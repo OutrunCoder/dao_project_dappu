@@ -22,7 +22,7 @@ async function main() {
     // investor_4,
     // investor_5,
     //
-    // recipient_1,
+    recipient_1,
     // randomUser
   ] = accounts;
 
@@ -57,6 +57,27 @@ async function main() {
   let fundTrx;
   fundTrx = await funder.sendTransaction({ to: daoContract.address, value: etherToWei(1000)});
   await fundTrx.wait();
+
+  console.log('>> Add mock proposal history to contract... \n');
+  for (let i = 0; i < 3; i++) {
+    const propId = i + 1;
+    // Create prop
+    let trx = await daoContract.connect(investor_1).createProposal(`Prop_${propId}`, etherToWei(100), recipient_1.address);
+    await trx.wait();
+
+    // voting...
+    trx = await daoContract.connect(investor_1).vote(propId);
+    await trx.wait();
+    trx = await daoContract.connect(investor_2).vote(propId);
+    await trx.wait();
+    trx = await daoContract.connect(investor_3).vote(propId);
+    await trx.wait();
+
+    // Finalize
+    trx = await daoContract.connect(investor_1).finalizeProposal(propId);
+
+    console.log(`>> Created and finalized proposal ${propId}\n`);
+  }
 }
 
 main().catch((error) => {
