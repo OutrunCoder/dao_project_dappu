@@ -106,4 +106,18 @@ contract DAO {
       // Emit an event
       emit Vote(_id, msg.sender);
     }
+
+    function finalizeProposal(uint256 _id) external onlyInvestor  {
+      // collect the proposal
+      Proposal storage proposal = proposals[_id];
+
+      // mark finalized
+      proposal.finalized = true;
+
+      // check for votes passsing
+
+      // invoke Transfer if passed
+
+      // Emit event
+    }
 }
