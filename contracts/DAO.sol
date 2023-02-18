@@ -118,6 +118,7 @@ contract DAO {
       proposal.finalized = true;
 
       // check for votes passsing
+      require(proposal.votes >= quorum, "Must reach quorum to finalize proposal");
 
       // invoke Transfer if passed
 

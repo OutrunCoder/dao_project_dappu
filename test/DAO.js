@@ -278,6 +278,11 @@ describe('DAO', () => {
         await votingTrx.wait();
       });
 
+      it('rejects finalization if quorum is not met', async() => {
+        const unsupportedfinTrx = daoContract.connect(investor_1).finalizeProposal(1);
+        await expect(unsupportedfinTrx).to.be.rejected;
+      });
+
       it('rejects duplicate finalization', async() => {
         votingTrx = await daoContract.connect(investor_3).vote(1);
         await votingTrx.wait();
