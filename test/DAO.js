@@ -262,7 +262,35 @@ describe('DAO', () => {
       });
       // it('', async() => {});
     });
+    
+    describe('Failure', () => {
+      beforeEach(async () => {
+        propRecipient = recipient_1Address;
 
-    describe('Failure', () => {});
+        // create proposal
+        proposalTrx = await daoContract.connect(investor_1).createProposal('Proposal_test_finalization_rejection', propDistributionAmount, propRecipient);
+        await proposalTrx.wait();
+
+        // vote with a passing quorum
+        votingTrx = await daoContract.connect(investor_1).vote(1);
+        await votingTrx.wait();
+        votingTrx = await daoContract.connect(investor_2).vote(1);
+        await votingTrx.wait();
+      });
+
+      it('rejects duplicate finalization', async() => {
+        votingTrx = await daoContract.connect(investor_3).vote(1);
+        await votingTrx.wait();
+
+        // finalize proposal
+        finTrx = await daoContract.connect(investor_1).finalizeProposal(1);
+        await finTrx.wait();
+
+        // ! duplicate finalization
+        const duplicatedFinTrx = daoContract.connect(investor_1).finalizeProposal(1);
+        await expect(duplicatedFinTrx).to.be.rejected;
+      });
+      // it('', async() => {});
+    });
   });
 })

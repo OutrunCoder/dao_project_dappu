@@ -111,6 +111,9 @@ contract DAO {
       // collect the proposal
       Proposal storage proposal = proposals[_id];
 
+      // REQUIRE prop is not finalized twice
+      require(!proposal.finalized, 'Proposal has been finalized already');
+
       // mark finalized
       proposal.finalized = true;
 
