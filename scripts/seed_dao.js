@@ -78,6 +78,16 @@ async function main() {
 
     console.log(`>> Created and finalized proposal ${propId}\n`);
   }
+
+  console.log('>> Create proposal 4 in ready state... \n');
+  let lastTrx = await daoContract.connect(investor_1).createProposal(`Prop_${4}`, etherToWei(100), recipient_1.address);
+    await lastTrx.wait();
+    lastTrx = await daoContract.connect(investor_1).vote(4);
+    await lastTrx.wait();
+    lastTrx = await daoContract.connect(investor_2).vote(4);
+    await lastTrx.wait();
+
+    console.log('>> READY FOR UI DEV!');
 }
 
 main().catch((error) => {
