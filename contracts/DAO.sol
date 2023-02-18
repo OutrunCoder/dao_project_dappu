@@ -124,6 +124,10 @@ contract DAO {
       // A. - Insecure
       // proposal.recipient.transfer(proposal.amount);
 
+      // B. - 
+      (bool valueWasSent, ) = proposal.recipient.call{value: proposal.amount}("");
+      require(valueWasSent, "Proposal amount value was never sent.");
+
       // Emit event
     }
 }
