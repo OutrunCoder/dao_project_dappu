@@ -53,9 +53,10 @@ async function main() {
   const daoContract = await hre.ethers.getContractAt('DAO', '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512');
   console.log(`DAO fetched: ${daoContract.address}\n`);
 
-  // console.log('>> Fund the DAO... \n');
-  // let fundTrx;
-  // fundTrx = await funder.sendTransaction({ to: dao});
+  console.log('>> Fund the DAO... \n');
+  let fundTrx;
+  fundTrx = await funder.sendTransaction({ to: daoContract.address, value: tokensToWei(1000)});
+  await fundTrx.wait();
 }
 
 main().catch((error) => {
