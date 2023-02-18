@@ -25,6 +25,10 @@ async function main() {
     recipient_1,
     randomUser
   ] = accounts;
+
+  console.log('>> Fetch Token contract... \n');
+  const tokenContract = await hre.ethers.getContractAt('Token', '0x5FbDB2315678afecb367f032d93F642f64180aa3');
+  console.log(`Token fetched: ${tokenContract.address}`);
 }
 
 main().catch((error) => {
