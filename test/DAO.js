@@ -294,6 +294,13 @@ describe('DAO', () => {
         await expect(unsupportedfinTrx).to.be.rejected;
       });
 
+      it('rejects finalization from non-investor', async() => {
+        votingTrx = await daoContract.connect(investor_3).vote(1);
+        await votingTrx.wait();
+
+        await expect(daoContract.connect(randomUser).finalizeProposal(1)).to.be.reverted;
+      });
+
       it('rejects duplicate finalization', async() => {
         votingTrx = await daoContract.connect(investor_3).vote(1);
         await votingTrx.wait();
