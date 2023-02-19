@@ -7,20 +7,38 @@ import Navigation from './Navigation';
 import Loading from './Loading';
 
 // ABIs: Import your contract ABIs here
-// import TOKEN_ABI from '../abis/Token.json'
+import DAO_ABI from '../abis/DAO.json'
 
 // Config: Import your network config here
-// import config from '../config.json';
+import config from '../config.json';
 
 function App() {
+  const [daoContract, setDaoContract] = useState(null);
+
+  const [treasuryBalance, setTreasuryBalance] = useState(0);
+
   const [account, setAccount] = useState(null)
   const [balance, setBalance] = useState(0)
 
   const [isLoading, setIsLoading] = useState(true)
 
   const loadBlockchainData = async () => {
+    // const network = 
+    const { token, dao } = config[31337];
+
     // Initiate provider
     const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    // initialize contracts
+    const daoContract = new ethers.Contract(dao.address, DAO_ABI, provider);
+
+    setDaoContract(daoContract);
+
+    // TB
+    let treasuryBalance = await provider.getBalance(daoContract.address);
+    treasuryBalance = ethers.utils.formatUnits(treasuryBalance, 18);
+    setTreasuryBalance(treasuryBalance);
+
 
     // Fetch accounts
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -53,7 +71,11 @@ function App() {
         <Loading />
       ) : (
         <>
-          
+          <hr/>
+
+          <p className='text-center'><strong>Treasury Balance:</strong> {treasuryBalance} ETH</p>
+
+          <hr/>
         </>
       )}
     </Container>
