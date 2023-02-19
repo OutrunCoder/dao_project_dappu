@@ -31,7 +31,11 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
               <td>{finalized ? 'Approved' : 'In Progress'}</td>
               <td>{votes.toString()}</td>
               <td>
-                <Button>Vote</Button>
+                {finalized ? (
+                  'Voted'
+                ) : (
+                  <Button>Vote</Button>
+                )}
               </td>
               <td>
                 <Button>Finalize</Button>
