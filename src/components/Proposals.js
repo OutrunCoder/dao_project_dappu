@@ -3,7 +3,8 @@ import { ethers } from 'ethers';
 
 const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading }) => {
   console.log('>> PROPS TABLE HAS LIST:');
-  console.table(listOfProps);
+  console.log(listOfProps);
+  // console.table(listOfProps);
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -19,17 +20,22 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
         </tr>
       </thead>
       <tbody>
-        {listOfProps.map((prop) => {
+        {listOfProps.map((prop, i) => {
+          const { id, name, recipient, amount, finalized, votes } = prop;
           return (
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr key={i}>
+              <td>{id.toString()}</td>
+              <td>{name}</td>
+              <td>{recipient}</td>
+              <td>{amount.toString()}</td>
+              <td>{finalized}</td>
+              <td>{votes.toString()}</td>
+              <td>
+                <Button>Vote</Button>
+              </td>
+              <td>
+                <Button>Finalize</Button>
+              </td>
             </tr>
           );
         })}
