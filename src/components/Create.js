@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { Form, Button, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner, FormControl } from "react-bootstrap";
 import { ethers } from "ethers";
 
 const Create = ({ provider, daoContract, setIsloading }) => {
   return (
-    <h1>Create Component ready!</h1>
+    <Form>
+      <Form.Group>
+        <FormControl type="text"/>
+        <FormControl type="number"/>
+        <FormControl type="text"/>
+      </Form.Group>
+    </Form>
   );
 };
 
