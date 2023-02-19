@@ -2,9 +2,26 @@ import { Table, Button } from "react-bootstrap";
 import { ethers } from 'ethers';
 
 const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading }) => {
-  console.log('>> PROPS TABLE HAS LIST:');
-  console.log(listOfProps);
+  // console.log('>> PROPS TABLE HAS LIST:');
+  // console.log(listOfProps);
   // console.table(listOfProps);
+
+  // TODO - ADD verification if current user has voted on prop or not to switch out "Voted" btn
+
+  const handleVote = async(id) => {
+    console.log(`>> VOTING ON PROP ${id}...`);
+    try {
+      const signer = await provider.getSigner();
+      const trx = await daoContract.connect(signer).vote(id);
+      await trx.wait();
+  
+      setIsLoading(true);
+    } catch(err) {
+      console.error('(!) VOTTING FAILED:', err);
+      window.alert('(!) User rejected or transaction reverted. (!)');
+    }
+  };
+
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -35,7 +52,12 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
                 {finalized ? (
                   'Voted'
                 ) : (
-                  <Button variant="primary" style={{ width: "100%"}}>Vote</Button>
+                  <Button
+                    variant="primary"
+                    style={{ width: "100%"}}
+                    onClick={() => handleVote(id)}>
+                      Vote
+                  </Button>
                 )}
               </td>
               <td>
