@@ -28,7 +28,7 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
               <td>{name}</td>
               <td>{recipient}</td>
               <td>{ethers.utils.formatUnits(amount, 'ether')} ETH</td>
-              <td>{finalized}</td>
+              <td>{finalized ? 'Approved' : 'In Progress'}</td>
               <td>{votes.toString()}</td>
               <td>
                 <Button>Vote</Button>
