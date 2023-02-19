@@ -28,9 +28,11 @@ function App() {
     setAccount(account)
 
     // Fetch account balance
-    let balance = await provider.getBalance(account)
-    balance = ethers.utils.formatUnits(balance, 18)
-    setBalance(balance)
+    // let balance = await provider.getBalance(account)
+    // balance = ethers.utils.formatUnits(balance, 18)
+    // setBalance(balance)
+    // <p className='text-center'><strong>Your ETH Balance:</strong> {balance} ETH</p>
+    // <p className='text-center'>Edit App.js to add your code here.</p>
 
     setIsLoading(false)
   }
@@ -45,14 +47,13 @@ function App() {
     <Container>
       <Navigation account={account} />
 
-      <h1 className='my-4 text-center'>React Hardhat Template</h1>
+      <h1 className='my-4 text-center'>Welcome to our DAO!</h1>
 
       {isLoading ? (
         <Loading />
       ) : (
         <>
-          <p className='text-center'><strong>Your ETH Balance:</strong> {balance} ETH</p>
-          <p className='text-center'>Edit App.js to add your code here.</p>
+          
         </>
       )}
     </Container>
