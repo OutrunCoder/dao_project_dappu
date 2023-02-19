@@ -14,10 +14,24 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
       const signer = await provider.getSigner();
       const trx = await daoContract.connect(signer).vote(id);
       await trx.wait();
-  
+      
       setIsLoading(true);
     } catch(err) {
       console.error('(!) VOTTING FAILED:', err);
+      window.alert('(!) User rejected or transaction reverted. (!)');
+    }
+  };
+  
+  const handleFinalization = async(id) => {
+    console.log(`>> FINALIZING PROP ${id}...`);
+    try {
+      const signer = await provider.getSigner();
+      const trx = await daoContract.connect(signer).finalizeProposal(id);
+      await trx.wait();
+      
+      setIsLoading(true);
+    } catch(err) {
+      console.error('(!) FINALIZATION FAILED:', err);
       window.alert('(!) User rejected or transaction reverted. (!)');
     }
   };
@@ -61,7 +75,14 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
                 )}
               </td>
               <td>
-                  {readyToFinalize && (<Button variant="primary" style={{ width: "100%"}}>Finalize</Button>)}
+                  {readyToFinalize && (
+                    <Button
+                      variant="primary"
+                      style={{ width: "100%"}}
+                      onClick={() => {handleFinalization(id)}}>
+                        Finalize
+                    </Button>
+                  )}
               </td>
             </tr>
           );
