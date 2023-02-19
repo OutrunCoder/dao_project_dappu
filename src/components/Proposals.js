@@ -5,9 +5,21 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
   console.log('>> PROPS TABLE HAS LIST:');
   console.table(listOfProps);
   return (
-    <>
-      <h1>PROPS TABLE IS STARTED!</h1>
-    </>
+    <Table striped bordered hover responsive>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Proposal Name</th>
+          <th>Recipient Address</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Total Votes</th>
+          <th>Cast Votes</th>
+          <th>Finalize</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </Table>
   );
 };
 
