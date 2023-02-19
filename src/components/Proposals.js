@@ -18,7 +18,22 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
           <th>Finalize</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {listOfProps.map((prop) => {
+          return (
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          );
+        })}
+      </tbody>
     </Table>
   );
 };
