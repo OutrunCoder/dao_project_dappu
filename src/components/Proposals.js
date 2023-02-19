@@ -22,6 +22,7 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
       <tbody>
         {listOfProps.map((prop, i) => {
           const { id, name, recipient, amount, finalized, votes } = prop;
+          const readyToFinalize =  !finalized && votes >= quorum;
           return (
             <tr key={i}>
               <td>{id.toString()}</td>
@@ -38,7 +39,7 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
                 )}
               </td>
               <td>
-                <Button>Finalize</Button>
+                  {readyToFinalize && (<Button>Finalize</Button>)}
               </td>
             </tr>
           );
