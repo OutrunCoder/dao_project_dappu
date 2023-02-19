@@ -7,9 +7,13 @@ const Create = ({ provider, daoContract, setIsloading }) => {
   const [amount, setAmount] = useState(0);
   const [recipient, setRecipient] = useState('');
 
+  const [isWaiting, setIsWaiting] = useState(false);
+
   const handleCreateProposal = async(e) => {
     e.preventDefault();
     console.log(`>> Creating Proposal...`);
+    setIsWaiting(true);
+
     console.table({ name, amount, recipient});
 
     try {
@@ -46,7 +50,16 @@ const Create = ({ provider, daoContract, setIsloading }) => {
           className='my-2'
           onChange={(e) => setRecipient(e.target.value)}
           />
-        <Button variant="primary" type="submit" style={{ width: '100%'}}> Create Proposal</Button>
+          {isWaiting ? (
+            <Spinner animation="border" style={{ display: 'block', margin: '0 auto'}}/>
+          ) : (
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ width: '100%'}}>
+              Create Proposal
+            </Button>
+          )}
       </Form.Group>
     </Form>
   );
