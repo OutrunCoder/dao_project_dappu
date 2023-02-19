@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 
 // Components
 import Navigation from './Navigation';
+import Proposals from './Proposals';
 import Loading from './Loading';
 
 // ABIs: Import your contract ABIs here
@@ -96,6 +97,13 @@ function App() {
           <p className='text-center'><strong>Treasury Balance:</strong> {treasuryBalance} ETH</p>
 
           <hr/>
+
+          <Proposals
+            provider={provider}
+            daoContract={daoContract}
+            listOfProps={listOfProps}
+            quorum={quorum}
+            setIsLoading={setIsLoading}/>
         </>
       )}
     </Container>
