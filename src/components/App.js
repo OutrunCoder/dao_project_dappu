@@ -13,9 +13,13 @@ import DAO_ABI from '../abis/DAO.json'
 import config from '../config.json';
 
 function App() {
+  const [provider, setProvider] = useState(null);
   const [daoContract, setDaoContract] = useState(null);
 
   const [treasuryBalance, setTreasuryBalance] = useState(0);
+
+  const [listOfProps, setListOfProps]= useState([]);
+  const [quorum, setQuorum] = useState(0);
 
   const [account, setAccount] = useState(null)
   const [balance, setBalance] = useState(0)
@@ -27,7 +31,8 @@ function App() {
     const { token, dao } = config[31337];
 
     // Initiate provider
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
 
     // initialize contracts
     const daoContract = new ethers.Contract(dao.address, DAO_ABI, provider);
@@ -54,15 +59,20 @@ function App() {
       const prop = await daoContract.proposals(propId);
       propItems.push(prop);
     }
+    
+    setListOfProps(propItems);
 
+    setQuorum(await daoContract.quorum());
+
+    setIsLoading(false)
+
+    // ! DEMO IMP BELOW
     // Fetch account balance
     // let balance = await provider.getBalance(account)
     // balance = ethers.utils.formatUnits(balance, 18)
     // setBalance(balance)
     // <p className='text-center'><strong>Your ETH Balance:</strong> {balance} ETH</p>
     // <p className='text-center'>Edit App.js to add your code here.</p>
-
-    setIsLoading(false)
   }
 
   useEffect(() => {
