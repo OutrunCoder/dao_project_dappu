@@ -35,11 +35,11 @@ const Proposals = ({ provider, daoContract, listOfProps, quorum, setIsLoading })
                 {finalized ? (
                   'Voted'
                 ) : (
-                  <Button>Vote</Button>
+                  <Button variant="primary" style={{ width: "100%"}}>Vote</Button>
                 )}
               </td>
               <td>
-                  {readyToFinalize && (<Button>Finalize</Button>)}
+                  {readyToFinalize && (<Button variant="primary" style={{ width: "100%"}}>Finalize</Button>)}
               </td>
             </tr>
           );
