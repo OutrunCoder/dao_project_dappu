@@ -45,6 +45,16 @@ function App() {
     const account = ethers.utils.getAddress(accounts[0])
     setAccount(account)
 
+    // Collect proposals
+    const propItems = [];
+    const proposalCount = await daoContract.proposalCount();
+    for(let i = 0; i < proposalCount; i++) {
+      const propId = i + 1;
+      // collect on the loop
+      const prop = await daoContract.proposals(propId);
+      propItems.push(prop);
+    }
+
     // Fetch account balance
     // let balance = await provider.getBalance(account)
     // balance = ethers.utils.formatUnits(balance, 18)
