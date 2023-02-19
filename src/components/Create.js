@@ -7,18 +7,22 @@ const Create = ({ provider, daoContract, setIsloading }) => {
   const [amount, setAmount] = useState(0);
   const [recipient, setRecipient] = useState('');
 
-  const handleCreateProposal = (e) => {
+  const handleCreateProposal = async(e) => {
     e.preventDefault();
     console.log(`>> Creating Proposal...`);
     console.table({ name, amount, recipient});
 
     try {
-
-      // setIsloading(true);
+      const signer = await provider.getSigner();
+      const formattedAmount = ethers.utils.parseUnits(amount.toString(), 'ether');
+      const trx = await daoContract.connect(signer).createProposal(name, formattedAmount, recipient);
+      await trx.wait();
     } catch(err) {
       console.error('(!) CREATE PROPOSAL FAILED:', err);
       window.alert('(!) User rejected or transaction reverted. (!)');
     }
+
+    setIsloading(true);
   };
 
   return (
